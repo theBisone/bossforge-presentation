@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOSS FORGE × TANYA — План работы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0907;
+    --bg-2:#13110d;
+    --bg-3:#1a1712;
+    --ink:#f4eee2;
+    --ink-dim:#a89e8a;
+    --ink-mute:#6b6354;
+    --gold:#c9a961;
+    --gold-bright:#e8c878;
+    --gold-deep:#8b7340;
+    --rust:#b8552c;
+    --line:rgba(201,169,97,.18);
+    --line-strong:rgba(201,169,97,.4);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* Шум/зерно для премиум-ощущения */
+  body::before{
+    content:'';
+    position:fixed;inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/><feColorMatrix values='0 0 0 0 0.78 0 0 0 0 0.66 0 0 0 0 0.38 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    pointer-events:none;
+    z-index:1;
+    opacity:.35;
+    mix-blend-mode:overlay;
+  }
+  /* Виньетирование */
+  body::after{
+    content:'';
+    position:fixed;inset:0;
+    background:radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.55) 100%);
+    pointer-events:none;
+    z-index:2;
+  }
+
+  .display{font-family:'Cormorant Garamond',serif;font-weight:400;letter-spacing:-.02em;line-height:1}
+  .mono{font-family:'JetBrains Mono',monospace;font-weight:400;letter-spacing:.05em;text-transform:uppercase;font-size:.72rem}
+  .gold{color:var(--gold)}
+  .italic-display{font-style:italic;font-family:'Cormorant Garamond',serif}
+
+  /* СЕКЦИИ */
+  section{
+    position:relative;
+    padding:140px 8vw;
+    border-bottom:1px solid var(--line);
+    z-index:3;
+  }
+  @media(max-width:768px){
+    section{padding:80px 6vw}
+  }
+
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:60px 8vw;
+    background:radial-gradient(ellipse 80% 50% at 50% 30%, rgba(201,169,97,.08), transparent 70%);
+  }
+  .hero-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:5;
+  }
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand-mark{
+    width:42px;height:42px;
+    border:1px solid var(--gold);
+    display:grid;place-items:center;
+    transform:rotate(45deg);
+  }
+  .brand-mark span{transform:rotate(-45deg);font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.2rem;font-weight:600}
+  .brand-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;letter-spacing:.3em;font-weight:500}
+  .hero-meta{text-align:right;color:var(--ink-mute)}
+
+  .hero-center{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:60px 0;
+    position:relative;
+  }
+  .hero-eyebrow{
+    color:var(--gold);
+    margin-bottom:32px;
+    display:flex;align-items:center;gap:16px;
+    opacity:0;
+    animation:fadeUp 1s .2s forwards;
+  }
+  .hero-eyebrow::before{
+    content:'';width:50px;height:1px;background:var(--gold);
+  }
+  .hero-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(3rem,9vw,9rem);
+    font-weight:300;
+    line-height:.92;
+    letter-spacing:-.03em;
+    margin-bottom:30px;
+    opacity:0;
+    animation:fadeUp 1s .4s forwards;
+  }
+  .hero-title em{
+    font-style:italic;
+    color:var(--gold);
+    font-weight:300;
+  }
+  .hero-subtitle{
+    max-width:600px;
+    color:var(--ink-dim);
+    font-size:1.15rem;
+    line-height:1.7;
+    opacity:0;
+    animation:fadeUp 1s .6s forwards;
+  }
+  .hero-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    color:var(--ink-mute);
+    opacity:0;
+    animation:fadeUp 1s .8s forwards;
+  }
+  .scroll-hint{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s infinite}
+
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+  @keyframes scrollPulse{
+    0%,100%{opacity:.3;transform:scaleY(.5)}
+    50%{opacity:1;transform:scaleY(1)}
+  }
+  [class*='hero-'][style*='animation']{transform:translateY(20px)}
+
+  /* SECTION HEADERS */
+  .section-header{
+    margin-bottom:80px;
+    max-width:900px;
+  }
+  .section-num{
+    color:var(--gold);
+    margin-bottom:24px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .section-num::after{
+    content:'';flex:1;max-width:80px;height:1px;background:var(--line-strong);
+  }
+  .section-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.2rem,5vw,4.5rem);
+    font-weight:300;
+    line-height:1;
+    letter-spacing:-.02em;
+    margin-bottom:24px;
+  }
+  .section-title em{font-style:italic;color:var(--gold)}
+  .section-lead{
+    font-size:1.1rem;
+    color:var(--ink-dim);
+    max-width:680px;
+    line-height:1.7;
+  }
+
+  /* TAMAGOTCHI / ВОРОНКА */
+  .funnel-wrap{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    align-items:center;
+  }
+  @media(max-width:900px){.funnel-wrap{grid-template-columns:1fr;gap:50px}}
+
+  .funnel-text p{
+    color:var(--ink-dim);
+    margin-bottom:20px;
+    font-size:1.05rem;
+  }
+  .funnel-text strong{color:var(--ink);font-weight:500}
+  .funnel-text .pull{
+    border-left:2px solid var(--gold);
+    padding-left:24px;
+    margin:30px 0;
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.6rem;
+    font-style:italic;
+    color:var(--ink);
+    line-height:1.4;
+  }
+
+  /* SVG ВОРОНКА */
+  .funnel-svg{width:100%;max-width:480px;margin:0 auto;display:block}
+  .funnel-svg .stage{transform-origin:center;animation:fadeStage .8s backwards}
+  .funnel-svg .stage:nth-child(1){animation-delay:.1s}
+  .funnel-svg .stage:nth-child(2){animation-delay:.3s}
+  .funnel-svg .stage:nth-child(3){animation-delay:.5s}
+  .funnel-svg .stage:nth-child(4){animation-delay:.7s}
+  .funnel-svg .stage:nth-child(5){animation-delay:.9s}
+  @keyframes fadeStage{from{opacity:0;transform:translateY(10px)}}
+
+  /* ПРОЦЕСС / ПАЙПЛАЙН */
+  .pipeline{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    margin-top:60px;
+  }
+  @media(max-width:900px){.pipeline{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.pipeline{grid-template-columns:1fr}}
+
+  .pipe-step{
+    background:var(--bg);
+    padding:40px 30px;
+    position:relative;
+    transition:background .3s;
+  }
+  .pipe-step:hover{background:var(--bg-2)}
+  .pipe-step .num{
+    color:var(--gold);
+    font-family:'Cormorant Garamond',serif;
+    font-size:3.5rem;
+    line-height:1;
+    margin-bottom:20px;
+    font-weight:300;
+  }
+  .pipe-step h4{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.5rem;
+    font-weight:500;
+    margin-bottom:14px;
+    line-height:1.2;
+  }
+  .pipe-step p{color:var(--ink-dim);font-size:.95rem;line-height:1.6}
+
+  /* КОМАНДА / РОЛИ */
+  .roles{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--line);
+    margin-top:60px;
+  }
+  @media(max-width:768px){.roles{grid-template-columns:1fr}}
+  .role{
+    background:var(--bg);
+    padding:50px 40px;
+    position:relative;
+  }
+  .role-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:24px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .role-name{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2rem;
+    font-weight:500;
+    line-height:1;
+  }
+  .role-name small{
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-size:.7rem;
+    text-transform:uppercase;
+    letter-spacing:.2em;
+    color:var(--gold);
+    margin-bottom:10px;
+    font-weight:500;
+  }
+  .role-emoji{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2rem;
+    color:var(--gold);
+    font-style:italic;
+  }
+  .role p{color:var(--ink-dim);font-size:.98rem;margin-bottom:14px;line-height:1.65}
+  .role ul{list-style:none;margin-top:14px}
+  .role li{
+    color:var(--ink-dim);
+    font-size:.92rem;
+    padding-left:20px;
+    position:relative;
+    margin-bottom:8px;
+    line-height:1.5;
+  }
+  .role li::before{
+    content:'';
+    position:absolute;
+    left:0;top:.7em;
+    width:8px;height:1px;
+    background:var(--gold);
+  }
+
+  /* ОБЪЁМЫ */
+  .volumes{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:40px;
+    margin-top:50px;
+  }
+  @media(max-width:900px){.volumes{grid-template-columns:1fr;gap:30px}}
+  .vol-card{
+    border:1px solid var(--line);
+    padding:40px 30px;
+    position:relative;
+    transition:border-color .3s;
+  }
+  .vol-card:hover{border-color:var(--gold)}
+  .vol-card::before{
+    content:'';
+    position:absolute;
+    top:-1px;left:-1px;
+    width:30px;height:30px;
+    border-top:1px solid var(--gold);
+    border-left:1px solid var(--gold);
+  }
+  .vol-card::after{
+    content:'';
+    position:absolute;
+    bottom:-1px;right:-1px;
+    width:30px;height:30px;
+    border-bottom:1px solid var(--gold);
+    border-right:1px solid var(--gold);
+  }
+  .vol-num{
+    font-family:'Cormorant Garamond',serif;
+    font-size:4.5rem;
+    line-height:1;
+    color:var(--gold);
+    margin-bottom:8px;
+    font-weight:300;
+  }
+  .vol-num small{font-size:1.2rem;color:var(--ink-dim);margin-left:6px}
+  .vol-label{
+    color:var(--ink);
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.4rem;
+    margin-bottom:16px;
+    font-style:italic;
+  }
+  .vol-desc{color:var(--ink-dim);font-size:.95rem;line-height:1.6}
+
+  /* РЕФЕРЕНСЫ — концепция */
+  .ref-block{
+    background:var(--bg-2);
+    padding:60px;
+    margin-top:60px;
+    border-left:3px solid var(--gold);
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:40px;
+    align-items:center;
+  }
+  @media(max-width:768px){.ref-block{grid-template-columns:1fr;padding:40px 30px}}
+  .ref-icon{
+    font-family:'Cormorant Garamond',serif;
+    font-size:6rem;
+    color:var(--gold);
+    line-height:1;
+    font-style:italic;
+  }
+  .ref-block h3{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2rem;
+    margin-bottom:16px;
+    font-weight:500;
+  }
+  .ref-block p{color:var(--ink-dim);line-height:1.7}
+
+  /* ЗАЩИТА */
+  .protect-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    margin-top:60px;
+  }
+  @media(max-width:900px){.protect-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.protect-grid{grid-template-columns:1fr}}
+  .protect-card{
+    background:var(--bg);
+    padding:40px 28px;
+  }
+  .protect-card .icon{
+    width:40px;height:40px;
+    border:1px solid var(--gold);
+    display:grid;place-items:center;
+    margin-bottom:24px;
+    color:var(--gold);
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:1.4rem;
+  }
+  .protect-card h4{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.4rem;
+    margin-bottom:12px;
+    font-weight:500;
+    line-height:1.2;
+  }
+  .protect-card p{color:var(--ink-dim);font-size:.92rem;line-height:1.6}
+
+  /* ДЕНЬГИ — РАЗБИВКА */
+  .money-section{
+    background:var(--bg-2);
+  }
+  .money-wrap{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    margin-top:60px;
+    align-items:start;
+  }
+  @media(max-width:900px){.money-wrap{grid-template-columns:1fr;gap:50px}}
+
+  .donut-wrap{position:relative;aspect-ratio:1;max-width:480px;margin:0 auto}
+  .donut-wrap svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .donut-center{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+  .donut-center .label{color:var(--ink-mute);margin-bottom:8px}
+  .donut-center .value{
+    font-family:'Cormorant Garamond',serif;
+    font-size:4rem;
+    line-height:1;
+    font-weight:400;
+  }
+  .donut-center .sub{color:var(--ink-dim);margin-top:8px;font-size:.9rem}
+
+  .breakdown{display:flex;flex-direction:column;gap:20px}
+  .bd-row{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:20px;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .bd-color{width:14px;height:14px;border-radius:50%}
+  .bd-info h5{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.3rem;
+    font-weight:500;
+    margin-bottom:2px;
+  }
+  .bd-info p{color:var(--ink-mute);font-size:.85rem}
+  .bd-pct{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2rem;
+    color:var(--gold);
+    font-weight:300;
+  }
+
+  /* РЕКЛАМНЫЙ БЮДЖЕТ */
+  .ad-budget{
+    margin-top:80px;
+    padding-top:60px;
+    border-top:1px solid var(--line);
+  }
+  .ad-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    margin-top:40px;
+  }
+  @media(max-width:900px){.ad-grid{grid-template-columns:repeat(2, 1fr)}}
+  @media(max-width:480px){.ad-grid{grid-template-columns:1fr}}
+
+  .included-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:20px;
+    padding-top:24px;
+    border-top:1px dashed var(--line);
+    align-items:center;
+  }
+  .included-label{
+    color:var(--gold);
+    font-family:'JetBrains Mono',monospace;
+    font-size:.7rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    margin-right:8px;
+  }
+  .included-chip{
+    padding:8px 16px;
+    border:1px solid var(--line-strong);
+    color:var(--ink-dim);
+    font-size:.88rem;
+    border-radius:2px;
+    background:rgba(201,169,97,.03);
+  }
+  .included-chip strong{color:var(--ink);font-weight:500}
+  .ad-item{
+    background:var(--bg-2);
+    padding:32px 24px;
+  }
+  .ad-item .src{
+    color:var(--gold);
+    margin-bottom:14px;
+  }
+  .ad-item .price{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.2rem;
+    line-height:1;
+    margin-bottom:10px;
+    font-weight:400;
+  }
+  .ad-item .desc{color:var(--ink-dim);font-size:.85rem;line-height:1.5}
+
+  /* TANYA БЛОК — финальный */
+  .offer{
+    background:linear-gradient(135deg, rgba(201,169,97,.04) 0%, transparent 50%);
+    text-align:center;
+    padding:160px 8vw;
+  }
+  .offer-pre{color:var(--gold);margin-bottom:30px}
+  .offer-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(3rem,8vw,7rem);
+    line-height:.95;
+    font-weight:300;
+    margin-bottom:30px;
+    letter-spacing:-.02em;
+  }
+  .offer-title em{font-style:italic;color:var(--gold)}
+  .offer-big{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(8rem,20vw,16rem);
+    line-height:1;
+    color:var(--gold);
+    font-weight:300;
+    margin:60px 0;
+    position:relative;
+    display:inline-block;
+  }
+  .offer-big::after{
+    content:'%';
+    font-size:.4em;
+    color:var(--ink-dim);
+    vertical-align:top;
+    margin-left:10px;
+  }
+  .offer-sub{
+    max-width:700px;
+    margin:0 auto;
+    color:var(--ink-dim);
+    font-size:1.15rem;
+    line-height:1.8;
+  }
+  .offer-tagline{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.8rem;
+    font-style:italic;
+    color:var(--ink);
+    margin-top:50px;
+    line-height:1.4;
+  }
+
+  /* FOOTER */
+  footer{
+    padding:60px 8vw 40px;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--ink-mute);
+    flex-wrap:wrap;
+    gap:20px;
+    z-index:3;
+    position:relative;
+  }
+  footer .brand-name{font-size:1rem;letter-spacing:.4em}
+
+  /* Утилиты */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 1s, transform 1s}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* Декоративная линия-разделитель внутри секций */
+  .ornament{
+    display:flex;align-items:center;justify-content:center;
+    margin:40px 0;gap:16px;
+  }
+  .ornament span{width:60px;height:1px;background:var(--gold)}
+  .ornament div{
+    width:6px;height:6px;
+    background:var(--gold);
+    transform:rotate(45deg);
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-top">
+    <div class="brand">
+      <div class="brand-mark"><span>B</span></div>
+      <div class="brand-name">BOSS&nbsp;FORGE</div>
+    </div>
+    <div class="hero-meta mono">CONFIDENTIAL · 2026</div>
+  </div>
+
+  <div class="hero-center">
+    <div class="hero-eyebrow mono">Документ для Тани · к обсуждению</div>
+    <h1 class="hero-title">
+      Структура<br>
+      <em>работы</em><br>
+      и распределение ролей.
+    </h1>
+    <p class="hero-subtitle">
+      Документ описывает: устройство процесса, зоны ответственности,
+      объёмы работы и финансовую модель сотрудничества.
+      Просьба ознакомиться полностью — далее обсуждаем детали.
+    </p>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="mono">Bisone · Director · BOSS FORGE</div>
+    <div class="scroll-hint mono">
+      <span>Далее</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ЧТО ТАКОЕ ONLYFANS ============ -->
+<section class="reveal">
+  <div class="section-header">
+    <div class="section-num mono">01 · Контекст</div>
+    <h2 class="section-title">Что такое OnlyFans <em>на самом деле</em></h2>
+    <p class="section-lead">
+      Прежде чем говорить о работе — важно понимать продукт.
+      OnlyFans — это не «сайт для взрослых». Это другая бизнес-модель.
+    </p>
+  </div>
+
+  <div class="funnel-wrap">
+    <div class="funnel-text">
+      <p class="pull">«Тамагочи для взрослых» — мужчина чувствует, что у него есть личный, близкий контакт с конкретной девушкой.</p>
+      <p>Главный продукт OnlyFans — это <strong>ощущение близости</strong>.
+      Не контент сам по себе, а ощущение, что эта девушка — «его».
+      Поэтому мы продаём не картинки. Мы продаём <strong>персонажа, историю и доступ</strong>.</p>
+      <p>Чтобы мужчина платил — он должен сначала <strong>влюбиться в персонажа</strong>.
+      А чтобы влюбиться — он должен сначала её увидеть.
+      Так рождается воронка.</p>
+    </div>
+
+    <svg class="funnel-svg" viewBox="0 0 460 580" xmlns="http://www.w3.org/2000/svg">
+      <!-- Stage 1 -->
+      <g class="stage">
+        <polygon points="20,20 440,20 410,100 50,100" fill="rgba(201,169,97,.08)" stroke="var(--gold)" stroke-width="1"/>
+        <text x="230" y="55" fill="#f4eee2" font-family="Cormorant Garamond" font-size="22" text-anchor="middle">TikTok / Reels</text>
+        <text x="230" y="80" fill="#a89e8a" font-family="Inter" font-size="12" text-anchor="middle">Холодная аудитория · тренды</text>
+      </g>
+      <!-- Stage 2 -->
+      <g class="stage">
+        <polygon points="50,110 410,110 380,190 80,190" fill="rgba(201,169,97,.12)" stroke="var(--gold)" stroke-width="1"/>
+        <text x="230" y="145" fill="#f4eee2" font-family="Cormorant Garamond" font-size="22" text-anchor="middle">Instagram</text>
+        <text x="230" y="170" fill="#a89e8a" font-family="Inter" font-size="12" text-anchor="middle">Личность · хобби · образ жизни</text>
+      </g>
+      <!-- Stage 3 -->
+      <g class="stage">
+        <polygon points="80,200 380,200 350,280 110,280" fill="rgba(201,169,97,.18)" stroke="var(--gold)" stroke-width="1"/>
+        <text x="230" y="235" fill="#f4eee2" font-family="Cormorant Garamond" font-size="22" text-anchor="middle">Подписка → ссылка</text>
+        <text x="230" y="260" fill="#a89e8a" font-family="Inter" font-size="12" text-anchor="middle">Reddit · Twitter · SFS-трафик</text>
+      </g>
+      <!-- Stage 4 -->
+      <g class="stage">
+        <polygon points="110,290 350,290 320,400 140,400" fill="rgba(201,169,97,.28)" stroke="var(--gold)" stroke-width="1"/>
+        <text x="230" y="325" fill="#f4eee2" font-family="Cormorant Garamond" font-size="22" text-anchor="middle">OnlyFans</text>
+        <text x="230" y="352" fill="#0a0907" font-family="Inter" font-size="12" text-anchor="middle" font-weight="600">Free / soft контент · знакомство</text>
+        <text x="230" y="375" fill="#a89e8a" font-family="Inter" font-size="12" text-anchor="middle">$3–5 за подписку</text>
+      </g>
+      <!-- Stage 5 -->
+      <g class="stage">
+        <polygon points="140,410 320,410 270,540 190,540" fill="var(--gold)" stroke="var(--gold)" stroke-width="1"/>
+        <text x="230" y="450" fill="#0a0907" font-family="Cormorant Garamond" font-size="22" text-anchor="middle" font-weight="600">PPV · приваты</text>
+        <text x="230" y="470" fill="#0a0907" font-family="Inter" font-size="10" text-anchor="middle" opacity=".7">платный контент в DM</text>
+        <text x="230" y="495" fill="#0a0907" font-family="Inter" font-size="11" text-anchor="middle" opacity=".75">Главный заработок</text>
+        <text x="230" y="515" fill="#0a0907" font-family="Inter" font-size="11" text-anchor="middle" opacity=".75">$3 за фото — $500 за видео</text>
+      </g>
+      <!-- Метки сбоку -->
+      <text x="445" y="60" fill="#6b6354" font-family="JetBrains Mono" font-size="10" text-anchor="end">100k</text>
+      <text x="445" y="455" fill="#c9a961" font-family="JetBrains Mono" font-size="10" text-anchor="end">2–5%</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ============ ДВА ТИПА КОНТЕНТА ============ -->
+<section class="reveal">
+  <div class="section-header">
+    <div class="section-num mono">02 · Контент</div>
+    <h2 class="section-title">Два слоя <em>одной истории</em></h2>
+    <p class="section-lead">
+      Весь твой контент — это два мира. Один — публичный, для воронки.
+      Второй — приватный, для дохода. Они должны жить параллельно
+      и подпитывать друг друга.
+    </p>
+  </div>
+
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="num">01</div>
+      <h4>Public · Lifestyle</h4>
+      <p>TikTok, Reels, Instagram. Личность, образ, хобби, юмор.
+      Лёгкий флирт — но без «обнажёнки». Цель — заинтересовать.</p>
+    </div>
+    <div class="pipe-step">
+      <div class="num">02</div>
+      <h4>Soft · Teaser</h4>
+      <p>OnlyFans free / cheap-tier ($3–5). Около-бесплатный контент:
+      бельё, sensual, lifestyle с эстетикой. Раскрывает персонажа.</p>
+    </div>
+    <div class="pipe-step">
+      <div class="num">03</div>
+      <h4>Premium · Sale</h4>
+      <p>Закрытый <strong style="color:var(--ink)">PPV</strong>-контент
+      (<em>pay-per-view</em> — оплата за просмотр). Фан получает в личные сообщения
+      «закрытое» фото или видео и платит отдельно, чтобы открыть.
+      Цены — от <strong style="color:var(--ink)">$3–5 за картинку</strong>
+      до <strong style="color:var(--ink)">$500 за видео</strong>. Здесь происходит
+      главный заработок — продажа через чат.</p>
+    </div>
+    <div class="pipe-step">
+      <div class="num">04</div>
+      <h4>Trust · Loop</h4>
+      <p>Чатеры удерживают фана: общаются, шлют кастом-контент,
+      строят «отношения». Один лояльный фан = $200–2000/мес.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ КОМАНДА / РОЛИ ============ -->
+<section class="reveal">
+  <div class="section-header">
+    <div class="section-num mono">03 · Команда</div>
+    <h2 class="section-title">Кто чем <em>занимается</em></h2>
+    <p class="section-lead">
+      Твоя задача — быть в кадре и быть собой.
+      Всё остальное — упаковано в людей и процессы.
+    </p>
+  </div>
+
+  <div class="roles">
+    <div class="role">
+      <div class="role-head">
+        <div>
+          <small>Продюсер · Founder</small>
+          <div class="role-name">Шоумен</div>
+        </div>
+        <div class="role-emoji">I.</div>
+      </div>
+      <p>Лицо продакшна, известный шоумен Украины. Отвечает за весь
+      социальный блок — соцмедиа, имидж, стратегию, подачу персонажа.</p>
+      <ul>
+        <li>Ведёт <strong style="color:var(--ink)">контент-план</strong> с референсами под каждую съёмку</li>
+        <li>Корректирует, обучает, разбирает каждое видео после публикации</li>
+        <li>Постепенное обучение <strong style="color:var(--ink)">актёрскому мастерству</strong> — образ, эмоция, история</li>
+        <li>Отношения с площадками, тренд-вотчинг, стратегия позиционирования</li>
+      </ul>
+      <p style="margin-top:18px;padding:16px 18px;border-left:2px solid var(--gold);background:rgba(201,169,97,.04);font-size:.92rem;font-style:italic">
+        «Зритель влюбляется не в визуал — он влюбляется в образ и в историю.
+        Это и есть залог качественного трафика и высокого дохода.»
+      </p>
+      <p style="margin-top:18px;font-size:.85rem;color:var(--ink-mute);padding-top:14px;border-top:1px dashed var(--line)">
+        <em>Лицо продюсера раскрывается на этапе налаженного процесса
+        и взаимного доверия. Он работает исключительно с белой частью бизнеса —
+        публичность в этом направлении ему пока не нужна.</em>
+      </p>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div>
+          <small>Director · OnlyFans Lead</small>
+          <div class="role-name">Bisone</div>
+        </div>
+        <div class="role-emoji">II.</div>
+      </div>
+      <p>Директор BOSS FORGE. Ведёт OnlyFans-течение целиком —
+      стратегия аккаунта, ценообразование, аналитика, рост подписчиков,
+      оптимизация воронки.</p>
+      <ul>
+        <li>Структура аккаунта и tier-стратегия</li>
+        <li>Аналитика: что продаёт, что не продаёт</li>
+        <li>Оптимизация конверсии trial → paid</li>
+        <li>Координация чатеров, трафика и финансовой модели</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div>
+          <small>Sales · Communication</small>
+          <div class="role-name">Чатеры</div>
+        </div>
+        <div class="role-emoji">III.</div>
+      </div>
+      <p>Команда, которая ведёт переписку с фанами от твоего имени 24/7.
+      Это они продают PPV, удерживают фанов и доводят до повторных покупок.</p>
+      <ul>
+        <li>Ответы в DM круглосуточно</li>
+        <li>Продажа премиум-контента и кастомов</li>
+        <li>Работа под NDA + паспортные данные</li>
+        <li>Сегментация фанов по ценности</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div>
+          <small>Traffic</small>
+          <div class="role-name">Траферы</div>
+        </div>
+        <div class="role-emoji">IV.</div>
+      </div>
+      <p>Команда, которая льёт холодную аудиторию на твою воронку
+      из Reddit, Twitter, SFS, порно-агрегаторов и обменников.</p>
+      <ul>
+        <li>Reddit-постинг по сабреддитам</li>
+        <li>Twitter-ведение и автомейл</li>
+        <li>SFS-обмены и cross-promo</li>
+        <li>Раскладка контента по PornHub-like площадкам</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div>
+          <small>Legal</small>
+          <div class="role-name">Адвокат</div>
+        </div>
+        <div class="role-emoji">V.</div>
+      </div>
+      <p>Юрист на постоянной основе. Контракты, NDA, DMCA,
+      нотариальная помощь — вся юридическая защита внутри команды.</p>
+      <ul>
+        <li>NDA для всех, кто работает с твоим контентом</li>
+        <li>DMCA-мониторинг и снятие сливов 24/7</li>
+        <li>Нотариальные документы при необходимости</li>
+        <li>Защита персональных данных</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div>
+          <small>Production · OnlyFans TV</small>
+          <div class="role-name">Видео-команда</div>
+        </div>
+        <div class="role-emoji">VI.</div>
+      </div>
+      <p>Подключается на этапе OnlyFans TV — отдельного направления
+      премиальных видео-серий. Видеооператоры + монтажёры на проекте.</p>
+      <ul>
+        <li>Профессиональная съёмка по сценариям</li>
+        <li>Монтаж, цветокор, звук</li>
+        <li>Серийный контент / эпизоды</li>
+        <li>Выход в эфир по графику</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Сноска про референс -->
+  <div style="margin-top:60px;padding:36px 40px;background:var(--bg-2);border-left:2px solid var(--gold);display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:var(--gold);font-style:italic;line-height:1">↳</div>
+    <div>
+      <div class="mono" style="color:var(--gold);margin-bottom:10px">Терминология · к контент-плану</div>
+      <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;margin-bottom:10px">Что такое референс</h4>
+      <p style="color:var(--ink-dim);font-size:.98rem;line-height:1.65">
+        Когда речь идёт о соцсетях — продюсер скидывает <strong style="color:var(--ink)">референсы</strong>:
+        чужие видео или фото, по образцу которых нужно снять своё.
+        Желательно повторить их <strong style="color:var(--ink)">один в один</strong> — ракурс,
+        длительность, ритм, эмоция. Чужой ролик уже доказал, что работает в алгоритмах,
+        и мы экономим месяцы тестов.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ============ ОБЪЁМЫ ============ -->
+<section class="reveal">
+  <div class="section-header">
+    <div class="section-num mono">04 · Объёмы</div>
+    <h2 class="section-title">Что нужно <em>наснимать</em></h2>
+    <p class="section-lead">
+      В первый месяц делаем большой задел контента — пакеты,
+      lifestyle-материал, базу для соцсетей. После — ритм
+      становится спокойнее, потому что есть что монтировать и постить.
+    </p>
+  </div>
+
+  <div class="volumes">
+    <div class="vol-card">
+      <div class="vol-num">3<small>пака</small></div>
+      <div class="vol-label">Стартовая база</div>
+      <p class="vol-desc">Сексуальное бельё · нижнее бельё · без белья.
+      Несколько фото- и видео-сетов. Делаются заранее, до запуска,
+      чтобы было что продавать с первого дня.</p>
+    </div>
+    <div class="vol-card">
+      <div class="vol-num">5–7<small>в неделю</small></div>
+      <div class="vol-label">TikTok &amp; Reels</div>
+      <p class="vol-desc">В среднем 1 ролик в день. Формат варьируется:
+      5–7 коротких видео + 1–2 карусели. Снимаем блоками по 2–3 часа,
+      раз в неделю.</p>
+    </div>
+    <div class="vol-card">
+      <div class="vol-num">∞<small>далее</small></div>
+      <div class="vol-label">OnlyFans-контент</div>
+      <p class="vol-desc">Сначала — большой объём для базы.
+      Потом — спокойный режим: lifestyle, посты в чатах,
+      кастомы по запросу. Чем больше базы — тем легче ритм.</p>
+    </div>
+  </div>
+
+  <div class="ornament"><span></span><div></div><span></span></div>
+
+  <p style="text-align:center;color:var(--ink-dim);max-width:700px;margin:0 auto;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.4rem;line-height:1.5">
+    «2–3 съёмки в неделю по 2–3 часа. Остальное —<br>забота команды.»
+  </p>
+</section>
+
+<!-- ============ ДЕНЬГИ ============ -->
+<section class="reveal money-section">
+  <div class="section-header">
+    <div class="section-num mono">05 · Финансы</div>
+    <h2 class="section-title">Как делится <em>каждый доллар</em></h2>
+    <p class="section-lead">
+      Полная прозрачность. От 100% дохода аккаунта мы расписываем,
+      куда уходит каждая копейка. Без скрытых вычетов.
+    </p>
+  </div>
+
+  <div class="money-wrap">
+    <div class="donut-wrap">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- circumference of r=80 ≈ 502.65 -->
+        <!-- OnlyFans 20% -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#5a4a2a" stroke-width="32"
+          stroke-dasharray="100.53 502.65" stroke-dashoffset="0"/>
+        <!-- Чатер 22% -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#8b7340" stroke-width="32"
+          stroke-dasharray="110.58 502.65" stroke-dashoffset="-100.53"/>
+        <!-- Реклама ~13% -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#b8552c" stroke-width="32"
+          stroke-dasharray="65.34 502.65" stroke-dashoffset="-211.11"/>
+        <!-- Модель 20% -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#c9a961" stroke-width="32"
+          stroke-dasharray="100.53 502.65" stroke-dashoffset="-276.45"/>
+        <!-- Команда / агентство 25% -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#e8c878" stroke-width="32"
+          stroke-dasharray="125.66 502.65" stroke-dashoffset="-376.98"/>
+      </svg>
+      <div class="donut-center">
+        <div class="label mono">от каждого</div>
+        <div class="value">$100</div>
+        <div class="sub">дохода аккаунта</div>
+      </div>
+    </div>
+
+    <div class="breakdown">
+      <div class="bd-row">
+        <div class="bd-color" style="background:#5a4a2a"></div>
+        <div class="bd-info">
+          <h5>OnlyFans</h5>
+          <p>Налог платформы — фиксированный</p>
+        </div>
+        <div class="bd-pct">20%</div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-color" style="background:#8b7340"></div>
+        <div class="bd-info">
+          <h5>Чатер</h5>
+          <p>15–25% от его личных продаж на твоей странице</p>
+        </div>
+        <div class="bd-pct">~22%</div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-color" style="background:#b8552c"></div>
+        <div class="bd-info">
+          <h5>Реклама и трафик</h5>
+          <p>Reddit, SFS, Twitter, агрегаторы</p>
+        </div>
+        <div class="bd-pct">~13%</div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-color" style="background:#c9a961"></div>
+        <div class="bd-info">
+          <h5>Модель · ТЫ</h5>
+          <p>Твоя доля от общего оборота</p>
+        </div>
+        <div class="bd-pct">20%</div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-color" style="background:#e8c878"></div>
+        <div class="bd-info">
+          <h5>Команда BOSS FORGE</h5>
+          <p>Продюсер, SEO, юрист, продакшн, операционка</p>
+        </div>
+        <div class="bd-pct">~25%</div>
+      </div>
+
+      <!-- Сноска про чатера -->
+      <div style="margin-top:24px;padding:20px 22px;background:rgba(201,169,97,.05);border-left:2px solid var(--gold)">
+        <div class="mono" style="color:var(--gold);margin-bottom:10px;font-size:.65rem">К строке «Чатер»</div>
+        <p style="color:var(--ink-dim);font-size:.9rem;line-height:1.65;margin:0">
+          Процент чатера считается <strong style="color:var(--ink)">только от его личных продаж</strong>
+          на твоей странице — не от общих доходов аккаунта. Чем сильнее чатер,
+          тем выше его процент <em>и одновременно</em> тем выше вовлечённость
+          фанов и их желание покупать. Слабый чатер дешевле, но и продаж от него меньше.
+          Поэтому ставка на сильного чатера — не расход, а инвестиция в оборот.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Бюджет на рекламу — детально -->
+  <div class="ad-budget">
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:500;margin-bottom:14px">Из чего складывается <em class="italic-display gold">рекламный бюджет</em></h3>
+    <p style="color:var(--ink-dim);max-width:680px;line-height:1.7">
+      Стартует от <strong style="color:var(--ink)">$800/месяц</strong>.
+      Ниже — типичная разбивка. Цифры могут варьироваться, но это рабочий ориентир.
+    </p>
+
+    <div class="ad-grid">
+      <div class="ad-item">
+        <div class="src mono">SFS Traffic</div>
+        <div class="price">$50–150<small style="font-size:.7rem;color:var(--ink-mute);margin-left:6px">/нед</small></div>
+        <div class="desc">Обмен подписчиками с другими моделями. Тёплая аудитория.</div>
+      </div>
+      <div class="ad-item">
+        <div class="src mono">Instagram</div>
+        <div class="price">$300–400<small style="font-size:.7rem;color:var(--ink-mute);margin-left:6px">/мес</small></div>
+        <div class="desc">Закупка ведения и продвижения аккаунта. Среднемесячный бюджет.</div>
+      </div>
+      <div class="ad-item">
+        <div class="src mono">Reddit</div>
+        <div class="price">~$400<small style="font-size:.7rem;color:var(--ink-mute);margin-left:6px">/мес</small></div>
+        <div class="desc">Ведение постинга по тематическим сабреддитам.</div>
+      </div>
+      <div class="ad-item">
+        <div class="src mono">PornHub-like</div>
+        <div class="price">~$200<small style="font-size:.7rem;color:var(--ink-mute);margin-left:6px">/мес</small></div>
+        <div class="desc">Раскладка контента: Fapello, Erome, RedHead, MotherLess и др.</div>
+      </div>
+    </div>
+
+    <div class="included-row">
+      <span class="included-label">Уже в пакете:</span>
+      <span class="included-chip"><strong>Twitter / X</strong> — постинг, ретвиты, фан-аккаунты</span>
+      <span class="included-chip"><strong>Контент-план</strong> — референсы и съёмки</span>
+      <span class="included-chip"><strong>Аналитика</strong> — отчётность по неделям</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ОФФЕР ============ -->
+<section class="offer reveal">
+  <div class="offer-pre mono">Финансовая модель сотрудничества</div>
+  <h2 class="offer-title">Доля модели <em>в проекте</em></h2>
+  <div class="offer-big">20</div>
+  <p class="offer-sub">
+    <strong style="color:var(--ink)">20% от общего оборота странички</strong> — фиксированная доля модели.
+    Без вычета комиссии платформы, без вычета затрат на рекламу,
+    без вычета зарплат команды. Эта сумма выплачивается чистыми.
+  </p>
+  <p class="offer-tagline">Модель отвечает за контент.<br>Команда — за всё остальное.</p>
+
+  <div class="ornament" style="margin-top:80px"><span></span><div></div><span></span></div>
+
+  <p style="color:var(--ink-mute);max-width:680px;margin:0 auto;font-size:.95rem;line-height:1.75">
+    Первые <strong style="color:var(--gold)">две недели — период разгона</strong>.
+    Налаживаем коммуникацию, присматриваемся друг к другу, включаемся в ритм.
+    Параллельно создаются странички, начинаем подключать первые виды
+    «грязного» трафика, тестируем подачу. Когда процесс налажен и команда
+    с моделью вошли в синхрон — запускаем всё в полную меру: полный
+    рекламный бюджет, активная работа чатеров, плотный контент-план.
+  </p>
+</section>
+
+<footer>
+  <div class="brand">
+    <div class="brand-mark"><span>B</span></div>
+    <div class="brand-name">BOSS&nbsp;FORGE</div>
+  </div>
+  <div class="mono">© 2026 · Bisone, Director · подготовлено лично для Тани</div>
+</footer>
+
+<script>
+  // Reveal на скролл
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+      }
+    });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
